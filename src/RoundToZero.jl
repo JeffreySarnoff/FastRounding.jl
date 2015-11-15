@@ -3,11 +3,11 @@
        hi  lo  rounding        fastrounding
        +   +   hi              hi
        +   -   prevfloat(hi)   nextNearerToZero(hi)
-       -   +   hi              hi
-       -   -   nextfloat(hi)   nextNearerToZero(hi)
+       -   +   nextfloat(hi)   nextNearerToZero(hi)
+       -   -   hi              hi
 =#
 
-@inline roundingToZero{T<:AbstractFloat}(hi::T,lo::T) = (signbit(lo) ? nextNearerToZero(hi) : hi)
+@inline roundingToZero{T<:AbstractFloat}(hi::T,lo::T) = (signbit(hi)!=signbit(lo) ? nextNearerToZero(hi) : hi)
 
 function (+){T<:AbstractFloat}(a::T, b::T, ::RoundingMode{:ToZero})
     hi,lo = eftSum2(a,b)
