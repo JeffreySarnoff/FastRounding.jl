@@ -9,5 +9,6 @@ set_rounding(Float32, RoundNearest)
 include("adjacentFloat.jl")
 include("eftArithmetic.jl")
 include("eftRounding.jl")
+include("roundFast.jl")
 
 end # module
