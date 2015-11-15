@@ -1,5 +1,6 @@
 
 #=
+
        RoundDown
        hi  lo  rounding        fastrounding
        --------------------------------------------
@@ -46,4 +47,6 @@
 @inline eftRound{T<:AbstractFloat}(hi::T, lo::T, ::RoundingMode{:Down}) = 
     (signbit(lo) ? prevFloat(hi) : hi)
 
+@inline eftRound{T<:AbstractFloat}(hi::T, lo::T, ::RoundingMode{:Nearest}) = 
+    (hi)
 
