@@ -1,6 +1,6 @@
 module FastRounding
 
-import (+),(-),(*),(/),(sqrt)
+import Base: (+),(-),(*),(/),(sqrt)
 
 set_rounding(Float64, RoundNearest)
 set_rounding(Float32, RoundNearest)
