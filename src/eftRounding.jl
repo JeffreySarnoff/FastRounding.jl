@@ -32,6 +32,14 @@
        +   -   prevfloat(hi)   nextNearerToZero(hi)
        -   +   nextfloat(hi)   nextNearerToZero(hi)
        -   -   hi              hi
+
+      RoundNearest
+       hi  lo  rounding        fastrounding
+       --------------------------------------------
+       +   +   hi              hi
+       +   -   hi              hi
+       -   +   hi              hi
+       -   -   hi              hi
 =#
 
 
