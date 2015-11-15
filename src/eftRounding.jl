@@ -43,7 +43,7 @@
 =#
 
 
-@inline eftRound{T<:AbstractFloat}(hi::T, lo::T, ::RoundingMod{:ToZero}) = 
+@inline eftRound{T<:AbstractFloat}(hi::T, lo::T, ::RoundingMode{:ToZero}) = 
     (signbit(hi)!=signbit(lo) ? nextNearerToZero(hi) : hi)
 
 @inline eftRound{T<:AbstractFloat}(hi::T, lo::T, ::RoundingMode{:FromZero}) = 
