@@ -10,7 +10,7 @@ set_rounding(Float32, RoundNearest)
 #set_rounding(Float16, RoundNearest) Julia does not support this in v0.6.0-pre.beta.60
 
 
-include("errorfree_rounding.jl")
-include("roundFast.jl")
+include("errorfreeRounding.jl")
+include("roundedArithmetic.jl")
 
 end # module
