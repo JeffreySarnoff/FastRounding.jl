@@ -43,18 +43,18 @@
 =#
 
 
-@inline eftRound{T<:AbstractFloat}(hi::T, lo::T, ::RoundingMode{:ToZero}) = 
+@inline round_errorfree{T<:AbstractFloat}(hi::T, lo::T, ::RoundingMode{:ToZero}) = 
     (signbit(hi)!=signbit(lo) ? nextNearerToZero(hi) : hi)
 
-@inline eftRound{T<:AbstractFloat}(hi::T, lo::T, ::RoundingMode{:FromZero}) = 
+@inline round_errorfree{T<:AbstractFloat}(hi::T, lo::T, ::RoundingMode{:FromZero}) = 
     (signbit(hi)==signbit(lo) ? nextAwayFromZero(hi) : hi)
 
-@inline eftRound{T<:AbstractFloat}(hi::T, lo::T, ::RoundingMode{:Up}) = 
+@inline round_errorfree{T<:AbstractFloat}(hi::T, lo::T, ::RoundingMode{:Up}) = 
     (signbit(lo) ? hi : nextFloat(hi))
 
-@inline eftRound{T<:AbstractFloat}(hi::T, lo::T, ::RoundingMode{:Down}) = 
+@inline round_errorfree{T<:AbstractFloat}(hi::T, lo::T, ::RoundingMode{:Down}) = 
     (signbit(lo) ? prevFloat(hi) : hi)
 
-@inline eftRound{T<:AbstractFloat}(hi::T, lo::T, ::RoundingMode{:Nearest}) = 
+@inline round_errorfree{T<:AbstractFloat}(hi::T, lo::T, ::RoundingMode{:Nearest}) = 
     (hi)
 
