@@ -1,0 +1,4 @@
+julia 0.5.1
+Compat 0.21.0
+AdjacentFloats 0.0.1
+ErrorfreeArithmetic 0.0.1
