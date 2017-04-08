@@ -44,16 +44,20 @@
 
 
 @inline round_errorfree{T<:AbstractFloat}(hi::T, lo::T, ::RoundingMode{:ToZero}) = 
-    (signbit(hi)!=signbit(lo) ? nextNearerToZero(hi) : hi)
+    (signbit(hi)!=signbit(lo) ? next_nearerto_zero(hi) : hi)
 
 @inline round_errorfree{T<:AbstractFloat}(hi::T, lo::T, ::RoundingMode{:FromZero}) = 
-    (signbit(hi)==signbit(lo) ? nextAwayFromZero(hi) : hi)
+    (signbit(hi)==signbit(lo) ? next_awayfrom_zero(hi) : hi)
 
 @inline round_errorfree{T<:AbstractFloat}(hi::T, lo::T, ::RoundingMode{:Up}) = 
-    (signbit(lo) ? hi : nextFloat(hi))
+    (signbit(lo) ? hi : next_float(hi))
 
 @inline round_errorfree{T<:AbstractFloat}(hi::T, lo::T, ::RoundingMode{:Down}) = 
-    (signbit(lo) ? prevFloat(hi) : hi)
+    (signbit(lo) ? prev_float(hi) : hi)
 
-@inline round_errorfree{T<:AbstractFloat}(hi::T, lo::T, ::RoundingMode{:Nearest}) = (hi)
+@inline round_errorfree{T<:AbstractFloat}(hi::T, lo::T, ::RoundingMode{:Nearest}) = hi
+
+
+
+@inline round_errorfree{T<:AbstractFloat}(hi::T, ::RoundingMode{:Nearest}) = hi
 
