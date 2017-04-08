@@ -55,6 +55,5 @@
 @inline round_errorfree{T<:AbstractFloat}(hi::T, lo::T, ::RoundingMode{:Down}) = 
     (signbit(lo) ? prevFloat(hi) : hi)
 
-@inline round_errorfree{T<:AbstractFloat}(hi::T, lo::T, ::RoundingMode{:Nearest}) = 
-    (hi)
+@inline round_errorfree{T<:AbstractFloat}(hi::T, lo::T, ::RoundingMode{:Nearest}) = (hi)
 
