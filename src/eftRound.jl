@@ -5,32 +5,32 @@
        hi  lo  rounding        fastrounding
        --------------------------------------------
        +   +   hi              hi
-       +   -   prevfloat(hi)   nextNearerToZero(hi) == prevFloat(hi)
+       +   -   prevfloat(hi)   next_nearerto_zero(hi) == prev_float(hi)
        -   +   hi              hi
-       -   -   prevfloat(hi)   nextAwayFromZero(hi) == prevFloat(hi)
+       -   -   prevfloat(hi)   next_awayfrom_zero(hi) == prev_float(hi)
 
        RoundUp
        hi  lo  rounding        fastrounding
        --------------------------------------------
-       +   +   nextfloat(hi)   nextAwayFromZero(hi) == nextFloat(hi)
+       +   +   nextfloat(hi)   next_awayfrom_zero(hi) == next_float(hi)
        +   -   hi              hi
-       -   +   nextfloat(hi)   nextNearerToZero(hi) == nextFloat(hi)
+       -   +   nextfloat(hi)   next_nearerto_zero(hi) == next_float(hi)
        -   -   hi              hi
 
        RoundFromZero
        hi  lo  rounding        fastrounding
        --------------------------------------------
-       +   +   nextfloat(hi)   nextAwayFromZero(hi)
+       +   +   nextfloat(hi)   next_awayfrom_zero(hi)
        +   -   hi              hi
        -   +   hi              hi
-       -   -   prevfloat(hi)   nextAwayFromZero(hi
+       -   -   prevfloat(hi)   next_awayfrom_zero(hi)
 
        RoundToZero
        hi  lo  rounding        fastrounding
        --------------------------------------------
        +   +   hi              hi
-       +   -   prevfloat(hi)   nextNearerToZero(hi)
-       -   +   nextfloat(hi)   nextNearerToZero(hi)
+       +   -   prevfloat(hi)   next_nearerto_zero(hi)
+       -   +   nextfloat(hi)   next_nearerto_zero(hi)
        -   -   hi              hi
 
       RoundNearest
