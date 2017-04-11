@@ -15,14 +15,6 @@ Faster directed rounding for inline arithmetic
 
 | RoundUp |
 |:--------|
-| | sign of `hi` | sign of `lo` | rounding | fastrounding | |
-| |:--:|:--:|:--|:--| |
-| | +  | +   | nextfloat(hi) | next_awayfrom_zero(hi) == next_float(hi) | |
-| | +  | -   | `hi`  | `hi` | |
-| | -  | +   | nextfloat(hi) | next_nearerto_zero(hi) == next_float(hi) | |
-| | -  | -   | `hi`  | `hi` | |
-
-
 
 | sign of `hi` | sign of `lo` | rounding | fastrounding |
 |:--:|:--:|:--|:--|
