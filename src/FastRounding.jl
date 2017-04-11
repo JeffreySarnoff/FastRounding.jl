@@ -9,27 +9,27 @@ set_rounding(Float64, RoundNearest)
 set_rounding(Float32, RoundNearest)
 
 
-function Base.+{T<:AbstractFloat, R<:RoundingMode}(a::T, b::T, rounding::R)
+function Base.:+{T<:AbstractFloat, R<:RoundingMode}(a::T, b::T, rounding::R)
     hi, lo = add_errorfree(a, b)
     return round_errorfree(hi, lo, rounding)
 end
 
-function Base.-{T<:AbstractFloat, R<:RoundingMode}(a::T, b::T, rounding::R)
+function Base.:-{T<:AbstractFloat, R<:RoundingMode}(a::T, b::T, rounding::R)
     hi, lo = subtract_errorfree(a,b)
     return round_errorfree(hi, lo, rounding)
 end
 
-function Base.*{T<:AbstractFloat, R<:RoundingMode}(a::T, b::T, rounding::R)
+function Base.:*{T<:AbstractFloat, R<:RoundingMode}(a::T, b::T, rounding::R)
     hi, lo = multiply_errorfree(a, b)
     return round_errorfree(hi, lo, rounding)
 end
 
-function Base.inv{T<:AbstractFloat, R<:RoundingMode}(a::T, rounding::R)
+function Base.:inv{T<:AbstractFloat, R<:RoundingMode}(a::T, rounding::R)
     hi, lo = inv_errorfree(a)
     return round_errorfree(hi, lo, rounding)
 end
 
-function Base./{T<:AbstractFloat, R<:RoundingMode}(a::T, b::T, rounding::R)
+function Base.:/{T<:AbstractFloat, R<:RoundingMode}(a::T, b::T, rounding::R)
     hi, lo = divide_accurately(a, b)
     return round_errorfree(hi, lo, rounding)
 end
