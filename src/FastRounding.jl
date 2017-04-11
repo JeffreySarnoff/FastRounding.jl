@@ -3,11 +3,10 @@ module FastRounding
 using AdjacentFloats
 using ErrorfreeArithmetic
 
+const SysFloat = Union{Float64, Float32}  # fast iff fma is available in hardware
+
 set_rounding(Float64, RoundNearest)
 set_rounding(Float32, RoundNearest)
-#set_rounding(Float16, RoundNearest) Julia does not support this in v0.6.0-pre.beta.60
-
-const SysFloat = Union{Float64, Float32}  # fast iff fma is available in hardware
 
 include("errorfreeRounding.jl")
 include("roundedArithmetic.jl")
