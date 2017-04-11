@@ -9,9 +9,11 @@ Faster directed rounding for inline arithmetic
 | sign of `hi` | sign of `lo`  | rounding       |    fastrounding      |
 |----|-----|----------------|----------------------|
 | +  | +   | `hi`             | `hi` |
+|    |     |                  |      |
 | +  | -   | `prevfloat(hi)`  | `next_nearerto_zero(hi) == prev_float(hi)` |
 |    |     |                  |      |
 | -  | +   | `hi`             | `hi` |
+|    |     |                  |      |
 | -  | -   | `prevfloat(hi)`  | `next_awayfrom_zero(hi) == prev_float(hi)` |
 
 RoundUp
