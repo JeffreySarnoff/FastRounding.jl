@@ -6,12 +6,12 @@ Faster directed rounding for inline arithmetic
 
 * RoundDown
 
-       hi | lo  | rounding    |    fastrounding
-       ---|-----|-------------|-----------------------
-       +  | +   | hi             | hi
-       +  | -   | prevfloat(hi)  | next_nearerto_zero(hi) == prev_float(hi)
-       -  | +   | hi             | hi
-       -  | -   | prevfloat(hi)  | next_awayfrom_zero(hi) == prev_float(hi)
+     hi | lo  | rounding    |    fastrounding
+     ---|-----|-------------|-----------------------
+     +  | +   | hi             | hi
+     +  | -   | prevfloat(hi)  | next_nearerto_zero(hi) == prev_float(hi)
+     -  | +   | hi             | hi
+     -  | -   | prevfloat(hi)  | next_awayfrom_zero(hi) == prev_float(hi)
 
 RoundUp
        hi  lo  rounding        fastrounding
