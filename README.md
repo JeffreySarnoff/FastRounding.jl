@@ -4,7 +4,7 @@ Faster directed rounding for inline arithmetic
 
 ## Internal Logic
 
-* RoundDown
+#### RoundDown
 
 | sign of `hi` | sign of `lo` | rounding | fastrounding |
 |:--:|:--:|:--|:--|
