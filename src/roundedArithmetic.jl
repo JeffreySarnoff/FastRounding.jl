@@ -1,4 +1,3 @@
-
 function (+){T<:AbstractFloat, R<:RoundingMode}(a::T, b::T, rounding::R)7
     hi, lo = add_errorfree(a, b)
     return round_errorfree(hi, lo, rounding)
