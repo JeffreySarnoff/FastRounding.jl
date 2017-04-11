@@ -5,8 +5,8 @@ using ErrorfreeArithmetic
 
 const SysFloat = Union{Float64, Float32}  # fast iff fma is available in hardware
 
-set_rounding(Float64, RoundNearest)
-set_rounding(Float32, RoundNearest)
+setrounding(Float64, RoundNearest)
+setrounding(Float32, RoundNearest)
 
 
 function Base.:+{T<:AbstractFloat, R<:RoundingMode}(a::T, b::T, rounding::R)
