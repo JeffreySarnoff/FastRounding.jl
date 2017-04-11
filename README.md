@@ -6,7 +6,7 @@ Faster directed rounding for inline arithmetic
 
 * RoundDown
 
-| hi | lo  | rounding       |    fastrounding      |
+| sign of `hi` | sign of `lo`  | rounding       |    fastrounding      |
 |----|-----|----------------|----------------------|
 | +  | +   | hi             | hi |
 | +  | -   | prevfloat(hi)  | next_nearerto_zero(hi) == prev_float(hi) |
