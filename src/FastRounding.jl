@@ -1,7 +1,6 @@
 module FastRounding
 
-export add, subtract, multiply, reciprocal, divide, square, squareroot. replace_base_rounding
-       
+export add, subtract, multiply, reciprocal, divide, square, squareroot, replace_base_rounding
 
 using AdjacentFloats
 using ErrorfreeArithmetic
