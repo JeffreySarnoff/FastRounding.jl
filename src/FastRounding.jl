@@ -63,11 +63,11 @@ round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Nearest})::T = hi
 
 
 function replace_base_rounding()
-    import Base: +, -, *, /, inv, sqrt
-    +{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R) = add(a, b, rounding)
-    -{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R) = add(a, b, rounding)
-    *{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R) = add(a, b, rounding)
-    /{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R) = add(a, b, rounding)
+    Base.:+{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R) = add(a, b, rounding)
+    Base.:-{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R) = add(a, b, rounding)
+    Base.:*{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R) = add(a, b, rounding)
+    Base.:/{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R) = add(a, b, rounding)
+    return Base.:+, Base.:-, Base.:*, Base.:/
 end    
     
 end # module
