@@ -1,6 +1,20 @@
 # FastRounding.jl
 Faster directed rounding for inline arithmetic
 
+## Quick Overview
+
+* This package provides arithmetic with directed rounding    
+  (RoundNearest, RoundUp, RoundDown, RoundToZero, RoundFromZero)
+  
+* Julia already does that. Our implementation is twice as fast.
+
+
+We calculate two results of the LLVM's directed roundingbuilt-in  provides directed rounding for the basic arithmetic operations.
+
+To perform arithmetic with directed rounding more rapidly than the LLVM allows, 
+we provide our own directed rounding control and calculation for arithmetic operations.
+manner of calculation  arithmetic with directed rounding results use error-free transformations to control rounding
+      and quick, accurate float adjacency value calculation.
 
 ## Internal Logic
 
