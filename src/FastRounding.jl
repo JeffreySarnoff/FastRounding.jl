@@ -53,6 +53,11 @@ function sqrt_round{T<:SysFloat, R<:RoundingMode}(a::T, rounding::R)::T
 end
 sqrt_round{T<:SysFloat}(a::T) = sqrt(a)
 
+#=
+    To perform arithmetic with directed rounding more rapidly
+      we use error-free transformations to control rounding
+      and quick, accurate float adjacency value calculation.
+=#      
 
 round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Nearest})::T = hi
 
