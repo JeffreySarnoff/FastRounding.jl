@@ -7,18 +7,19 @@ Faster directed rounding for inline arithmetic
 
 * This package provides arithmetic with directed rounding    
 
-* These arithmetic operations are supported:  { +, -, *, inv, /, sqrt }     
+* The arithmetic operations    
+  { +, -, *, inv, /, sqrt }     
 
-* These directed rounding modes are supported    
+* The directed rounding modes    
   { RoundNearest, RoundUp, RoundDown, RoundToZero, RoundFromZero }
   
+* Speedup is 2x or better on many systems
 
 
-We calculate two results of the LLVM's directed roundingbuilt-in  provides directed rounding for the basic arithmetic operations.
-
-To perform arithmetic with directed rounding more rapidly than the LLVM allows, 
-we provide our own directed rounding control and calculation for arithmetic operations.
-manner of calculation  arithmetic with directed rounding results use error-free transformations to control rounding
+To perform arithmetic with directed rounding more rapidly than the LLVM allows,     
+we provide our own directed rounding control and calculation for arithmetic operations.    
+manner of calculation  arithmetic with directed rounding    
+results use error-free transformations to control rounding    
       and quick, accurate float adjacency value calculation.
 
 ## Internal Logic
