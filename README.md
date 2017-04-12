@@ -25,6 +25,7 @@
   
 * Speedup is **2x** or better on many systems
 
+-------
 
 ## Internal Logic
 
