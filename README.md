@@ -15,12 +15,9 @@ Faster directed rounding for inline arithmetic
   
 * Speedup is 2x or better on many systems
 
+* Relies upon these Julia packages    
+  AdjacentFloats.jl, ErrorfreeTransformations.jl
 
-To perform arithmetic with directed rounding more rapidly than the LLVM allows,     
-we provide our own directed rounding control and calculation for arithmetic operations.    
-manner of calculation  arithmetic with directed rounding    
-results use error-free transformations to control rounding    
-      and quick, accurate float adjacency value calculation.
 
 ## Internal Logic
 
