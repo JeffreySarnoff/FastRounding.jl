@@ -17,6 +17,9 @@
 
 * This package provides arithmetic with directed rounding    
 
+* The numeric types
+  { Float32, Float64 }
+  
 * The arithmetic operations    
   { +, -, *, inv, /, sqrt }     
 
