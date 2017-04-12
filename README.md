@@ -25,7 +25,7 @@
   
 * Speedup is **2x** or better on many systems
 
-* Speedup is **8x** or better with interval arithmetic
+* Speedup is **8x** or better with interval-reliant computations
 
 -------
 
