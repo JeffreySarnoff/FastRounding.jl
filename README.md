@@ -25,6 +25,8 @@
   
 * Speedup is **2x** or better on many systems
 
+* Speedup is **8x** or better with interval arithmetic
+
 -------
 
 ## Internal Logic
