@@ -56,10 +56,10 @@ end
 
 
 round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:ToZero})::T =
-    signbit(hi) != signbit(lo) ? next_nearerto_zero(hi) : hi
+    signbit(hi) != signbit(lo) ? AdjacentFloats.next_nearerto_zero(hi) : hi
 
 round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:FromZero})::T =
-    signbit(hi) == signbit(lo) ? next_awayfrom_zero(hi) : hi
+    signbit(hi) == signbit(lo) ? AdjacentFloats.next_awayfrom_zero(hi) : hi
 
 round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Up})::T =
     signbit(lo) ? hi : next_float(hi)
