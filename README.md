@@ -1,5 +1,15 @@
 # FastRounding.jl
-Faster directed rounding for inline arithmetic
+### Faster directed rounding for inline arithmetic
+
+
+#### Copyright © 2017 by Jeffrey Sarnoff.  Released under the MIT License.
+
+-----
+
+[![Build Status](https://travis-ci.org/JeffreySarnoff/FastRounding.jl.svg?branch=master)](https://travis-ci.org/JeffreySarnoff/FastRounding.jl)
+
+-----
+
 
 ## Quick Overview
 
@@ -14,9 +24,6 @@ Faster directed rounding for inline arithmetic
   { RoundNearest, RoundUp, RoundDown, RoundToZero, RoundFromZero }
   
 * Speedup is 2x or better on many systems
-
-* Relies upon these Julia packages    
-  AdjacentFloats.jl, ErrorfreeTransformations.jl
 
 
 ## Internal Logic
