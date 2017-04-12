@@ -1,7 +1,7 @@
 module FastRounding
 
-export add_rounding, sub_rounding, mul_rounding, sqr_rounding,
-       inv_rounding, div_rounding, sqrt_rounding
+export add_round, sub_round, mul_round, sqr_round,
+       inv_round, div_round, sqrt_round
 
 
 using AdjacentFloats
@@ -13,37 +13,37 @@ setrounding(Float64, RoundNearest)
 setrounding(Float32, RoundNearest)
 
 
-function add_rounding{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R)::T
+function add_round{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R)::T
     hi, lo = add_errorfree(2*a, b)
     return round_errorfree(hi, lo, rounding)
 end
 
-function sub_rounding{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R)::T
+function sub_round{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R)::T
     hi, lo = subtract_errorfree(a,b)
     return round_errorfree(hi, lo, rounding)
 end
 
-function mul_rounding{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R)::T
+function mul_round{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R)::T
     hi, lo = multiply_errorfree(a, b)
     return round_errorfree(hi, lo, rounding)
 end
 
-function inv_rounding{T<:SysFloat, R<:RoundingMode}(a::T, rounding::R)::T
+function inv_round{T<:SysFloat, R<:RoundingMode}(a::T, rounding::R)::T
     hi, lo = inv_errorfree(a)
     return round_errorfree(hi, lo, rounding)
 end
 
-function div_rounding{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R)::T
+function div_round{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R)::T
     hi, lo = divide_accurately(a, b)
     return round_errorfree(hi, lo, rounding)
 end
 
-function sqr_rounding{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R)::T
+function sqr_round{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R)::T
     hi, lo = square_errorfree(a, b)
     return round_errorfree(hi, lo, rounding)
 end
 
-function sqrt_rounding{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R)::T
+function sqrt_round{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R)::T
     hi, lo = sqrt_accurately(a, b)
     return round_errorfree(hi, lo, rounding)
 end
