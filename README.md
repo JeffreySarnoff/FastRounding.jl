@@ -3,10 +3,15 @@ Faster directed rounding for inline arithmetic
 
 ## Quick Overview
 
+* What we do is what Julia already does.  We do it considerably faster.
+
 * This package provides arithmetic with directed rounding    
-  (RoundNearest, RoundUp, RoundDown, RoundToZero, RoundFromZero)
+
+* These arithmetic operations are supported:  { +, -, *, inv, /, sqrt }     
+
+* These directed rounding modes are supported    
+  { RoundNearest, RoundUp, RoundDown, RoundToZero, RoundFromZero }
   
-* Julia already does that. Our implementation is twice as fast.
 
 
 We calculate two results of the LLVM's directed roundingbuilt-in  provides directed rounding for the basic arithmetic operations.
