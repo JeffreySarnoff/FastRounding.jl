@@ -3,7 +3,6 @@ module FastRounding
 export add_round, sub_round, mul_round, sqr_round,
        inv_round, div_round, sqrt_round
 
-
 using AdjacentFloats
 using ErrorfreeArithmetic
 
