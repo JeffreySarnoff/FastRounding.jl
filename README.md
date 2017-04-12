@@ -23,7 +23,7 @@
 * The directed rounding modes    
   { RoundNearest, RoundUp, RoundDown, RoundToZero, RoundFromZero }
   
-* Speedup is 2x or better on many systems
+* Speedup is **2x** or better on many systems
 
 
 ## Internal Logic
