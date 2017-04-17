@@ -67,15 +67,15 @@ end
     return signbit(hi) != signbit(lo) ? AdjacentFloats.next_nearerto_zero(hi) : hi
 end       
 
-@inline round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:FromZero})::T
+@inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:FromZero})::T
     return signbit(hi) == signbit(lo) ? AdjacentFloats.next_awayfrom_zero(hi) : hi
 end
 
-@inline round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Up})::T
+@inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Up})::T
     return lo<=zero(T)  ? hi : next_float(hi)
 end
 
-@inline round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Down})::T
+@inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Down})::T
     signbit(lo) ? prev_float(hi) : hi
 end
 
