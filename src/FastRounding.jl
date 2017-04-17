@@ -59,19 +59,25 @@ end
       and quick, accurate float adjacency value calculation.
 =#      
 
-@inline round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Nearest}) = hi
+@inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Nearest})::T
+     return hi
+end       
 
-@inline round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:ToZero}) =
-    signbit(hi) != signbit(lo) ? AdjacentFloats.next_nearerto_zero(hi) : hi
+@inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:ToZero})::T
+    return signbit(hi) != signbit(lo) ? AdjacentFloats.next_nearerto_zero(hi) : hi
+end       
 
-@inline round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:FromZero}) =
-    signbit(hi) == signbit(lo) ? AdjacentFloats.next_awayfrom_zero(hi) : hi
+@inline round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:FromZero})::T
+    return signbit(hi) == signbit(lo) ? AdjacentFloats.next_awayfrom_zero(hi) : hi
+end
 
-@inline round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Up}) =
-    lo<=zero(T)  ? hi : next_float(hi)
+@inline round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Up})::T
+    return lo<=zero(T)  ? hi : next_float(hi)
+end
 
-@inline round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Down}) =
+@inline round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Down})::T
     signbit(lo) ? prev_float(hi) : hi
+end
 
     
 end # module
