@@ -59,7 +59,7 @@ end
       and quick, accurate float adjacency value calculation.
 =#      
 
-@inline round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Nearest})::T = hi
+round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Nearest})::T = hi
 
 @inline round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:ToZero})::T =
     signbit(hi) != signbit(lo) ? AdjacentFloats.next_nearerto_zero(hi) : hi
