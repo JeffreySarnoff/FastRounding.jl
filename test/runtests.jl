@@ -54,3 +54,19 @@ end
 @test testrounding(/, a, c, RoundToZero) == div_round(a, c, RoundToZero)
 @test testrounding(/, a, c, RoundNearest) == div_round(a, c, RoundNearest)
 
+@test testrounding(+, 1.0, 0.0, RoundUp) == 1.0
+@test testrounding(+, 1.0, 0.0, RoundDown) == 1.0
+@test testrounding(+, 1.0, 0.0, RoundToZero) == 1.0
+@test testrounding(+, 1.0, 0.0, RoundNearest) == 1.0
+@test testrounding(-, 1.0, 0.0, RoundUp) == 1.0
+@test testrounding(-, 1.0, 0.0, RoundDown) == 1.0
+@test testrounding(-, 1.0, 0.0, RoundToZero) == 1.0
+@test testrounding(-, 1.0, 0.0, RoundNearest) == 1.0
+@test testrounding(*, 1.0, 1.0, RoundUp) == 1.0
+@test testrounding(*, 1.0, 1.0, RoundDown) == 1.0
+@test testrounding(*, 1.0, 1.0, RoundToZero) == 1.0
+@test testrounding(*, 1.0, 1.0, RoundNearest) == 1.0
+@test testrounding(/, 1.0, 1.0, RoundUp) == 1.0
+@test testrounding(/, 1.0, 1.0, RoundDown) == 1.0
+@test testrounding(/, 1.0, 1.0, RoundToZero) == 1.0
+@test testrounding(/, 1.0, 1.0, RoundNearest) == 1.0
