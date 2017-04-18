@@ -6,7 +6,7 @@
 
 -----
 
-[![Build Status](https://travis-ci.org/JeffreySarnoff/FastRounding.jl.svg?branch=master)](https://travis-ci.org/JeffreySarnoff/FastRounding.jl)  *ignore that -- It is good to use*
+[![Build Status](https://travis-ci.org/JeffreySarnoff/FastRounding.jl.svg?branch=master)](https://travis-ci.org/JeffreySarnoff/FastRounding.jl)
 
 -----
 
