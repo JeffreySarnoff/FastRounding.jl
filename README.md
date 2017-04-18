@@ -29,7 +29,6 @@
 * Speedup is **2x** or better on many systems
 
 * Speedup is **4x** or better with interval-reliant computations    
-  *See the third comment [here](https://github.com/JuliaIntervals/ValidatedNumerics.jl/issues/273).*
 
 -------
 
