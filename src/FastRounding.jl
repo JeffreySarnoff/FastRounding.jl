@@ -15,43 +15,43 @@ setrounding(Float32, RoundNearest)
     hi, lo = add_errorfree(a, b)
     return round_errorfree(hi, lo, rounding)
 end
-@inline add_round{T<:SysFloat}(a::T, b::T) = a + b
+add_round{T<:SysFloat}(a::T, b::T) = a + b
 
 @inline function sub_round{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R)::T
     hi, lo = subtract_errorfree(a, b)
     return round_errorfree(hi, lo, rounding)
 end
-@inline sub_round{T<:SysFloat}(a::T, b::T) = a - b
+sub_round{T<:SysFloat}(a::T, b::T) = a - b
 
 @inline function mul_round{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R)::T
     hi, lo = multiply_errorfree(a, b)
     return round_errorfree(hi, lo, rounding)
 end
-@inline mul_round{T<:SysFloat}(a::T, b::T) = a * b
+mul_round{T<:SysFloat}(a::T, b::T) = a * b
 
 @inline function inv_round{T<:SysFloat, R<:RoundingMode}(a::T, rounding::R)::T
     hi, lo = inv_errorfree(a)
     return round_errorfree(hi, lo, rounding)
 end
-@inline inv_round{T<:SysFloat}(a::T) = inv(a)
+inv_round{T<:SysFloat}(a::T) = inv(a)
 
 @inline function div_round{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R)::T
     hi, lo = divide_accurately(a, b)
     return round_errorfree(hi, lo, rounding)
 end
-@inline div_round{T<:SysFloat}(a::T, b::T) = a / b
+div_round{T<:SysFloat}(a::T, b::T) = a / b
 
 @inline function sqr_round{T<:SysFloat, R<:RoundingMode}(a::T, rounding::R)::T
     hi, lo = square_errorfree(a)
     return round_errorfree(hi, lo, rounding)
 end
-@inline sqr_round{T<:SysFloat}(a::T) = a^2
+sqr_round{T<:SysFloat}(a::T) = a^2
 
 @inline function sqrt_round{T<:SysFloat, R<:RoundingMode}(a::T, rounding::R)::T
     hi, lo = sqrt_accurately(a)
     return round_errorfree(hi, lo, rounding)
 end
-@inline sqrt_round{T<:SysFloat}(a::T) = sqrt(a)
+sqrt_round{T<:SysFloat}(a::T) = sqrt(a)
 
 #=
     To perform arithmetic with directed rounding more rapidly
