@@ -65,7 +65,7 @@ end
 
 @inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:ToZero})::T
     return signbit(hi) != signbit(lo) ? AdjacentFloats.next_nearerto_zero(hi) : hi
-end       
+end
 
 @inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:FromZero})::T
     return signbit(hi) == signbit(lo) ? AdjacentFloats.next_awayfrom_zero(hi) : hi
@@ -76,7 +76,7 @@ end
 end
 
 @inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Down})::T
-    signbit(lo) ? prev_float(hi) : hi
+    return lo>=zero(T)  ? hi : prev_float(hi)
 end
 
     
