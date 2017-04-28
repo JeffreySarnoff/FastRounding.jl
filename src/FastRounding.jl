@@ -57,11 +57,11 @@ sqrt_round{T<:SysFloat}(a::T) = sqrt(a)
     To perform arithmetic with directed rounding more rapidly
       we use error-free transformations to control rounding
       and quick, accurate float adjacency value calculation.
-=#      
+=#
 
 @inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Nearest})::T
      return hi
-end       
+end
 
 @inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:ToZero})::T
     return signbit(hi) != signbit(lo) ? AdjacentFloats.next_nearerto_zero(hi) : hi
@@ -72,12 +72,12 @@ end
 end
 
 @inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Up})::T
-    return lo<=zero(T)  ? hi : next_float(hi)
+    return (lo<=zero(T) || isnan(lo))  ? hi : next_float(hi)
 end
 
 @inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Down})::T
-    return lo>=zero(T)  ? hi : prev_float(hi)
+    return (lo>=zero(T) || isnan(lo))  ? hi : prev_float(hi)
 end
 
-    
+
 end # module
