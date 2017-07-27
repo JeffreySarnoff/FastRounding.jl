@@ -60,6 +60,33 @@ sqrt_round{T<:SysFloat}(a::T) = sqrt(a)
 =#
 
 @inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Nearest})::T
+     !isinf(hi) && return hi
+     return signbit(hi) ? T(-Inf) : T(Inf)
+end
+
+@inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:ToZero})::T
+     !isinf(hi) && return signbit(hi) != signbit(lo) ? AdjacentFloats.next_nearerto_zero(hi) : hi
+     return signbit(hi) ? nextfloat(T(-Inf)) : prevfloat(T(Inf))
+end
+
+@inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:FromZero})::T
+    !isinf(hi) && return signbit(hi) == signbit(lo) ? AdjacentFloats.next_awayfrom_zero(hi) : hi
+    return signbit(hi) ? T(-Inf) : T(Inf)
+end
+
+@inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Up})::T
+    !isinf(hi) && return (lo<=zero(T) || isnan(lo))  ? hi : next_float(hi)
+    return signbit(hi) ? nextfloat(T(-Inf)) : T(Inf)
+end
+
+@inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Down})::T
+    !isinf(hi) && return (lo>=zero(T) || isnan(lo))  ? hi : prev_float(hi)
+    return signbit(hi) ? T(-Inf) : prevfloat(T(Inf))
+end
+
+#= prior (reasonable, conflicts with interval rounding on Infinities)
+
+@inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Nearest})::T
      return hi
 end
 
@@ -79,5 +106,6 @@ end
     return (lo>=zero(T) || isnan(lo))  ? hi : prev_float(hi)
 end
 
+=#
 
 end # module
