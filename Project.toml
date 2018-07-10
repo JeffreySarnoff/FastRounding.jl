@@ -1,0 +1,9 @@
+desc = "Rounding without rounding modes, using error-free transformations."
+keywords = ["round", "directed rounding", "error-free transformations", "floating-point"]
+name = "FastRounding"
+author = "Jeffrey Sarnoff"
+uuid = "bd8b86fa-8421-11e8-08d9-473040acd177"
+version = "v0.1.0"
+
+[deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
