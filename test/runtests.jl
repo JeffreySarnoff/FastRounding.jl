@@ -79,5 +79,9 @@ end
 @test testrounding(/, 1.0, 1.0, RoundToZero) == 1.0
 @test testrounding(/, 1.0, 1.0, RoundNearest) == 1.0
 
-@test testrounding(+, 0.1, 0.1, RoundUp) == 0.2
-@test testrounding(+, 0.1, 0.1, RoundDown) == prevfloat(0.2)
+a = 0.1; b = 0.1; hi, lo = two_sum(a, b)
+@assert !iszero(hi) && iszero(lo)
+@test round_errorfree(hi, lo, RoundUp) == nextfloat(0.2)
+@test round_errorfree(hi, lo, RoundDown) == prevfloat(0.2)
+@test add_round(a, b, RoundUp) == nextfloat(0.2)
+@test add_round(a, b, RoundDown) == prevfloat(0.2)
