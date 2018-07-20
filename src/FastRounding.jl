@@ -11,47 +11,47 @@ const SysFloat = Union{Float64, Float32}  # fast iff fma is available in hardwar
 setrounding(Float64, RoundNearest)
 setrounding(Float32, RoundNearest)
 
-@inline function add_round{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R)::T
-    hi, lo = add_errorfree(a, b)
+@inline function add_round(a::T, b::T, rounding::R)::T where {T<:SysFloat, R<:RoundingMode}
+    hi, lo = two_sum(a, b)
     return round_errorfree(hi, lo, rounding)
 end
-add_round{T<:SysFloat}(a::T, b::T) = a + b
+add_round(a::T, b::T) where {T<:SysFloat} = a + b
 
-@inline function sub_round{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R)::T
-    hi, lo = subtract_errorfree(a, b)
+@inline function sub_round(a::T, b::T, rounding::R)::T where {T<:SysFloat, R<:RoundingMode}
+    hi, lo = two_diff(a, b)
     return round_errorfree(hi, lo, rounding)
 end
-sub_round{T<:SysFloat}(a::T, b::T) = a - b
+sub_round(a::T, b::T) where {T<:SysFloat} = a - b
 
-@inline function mul_round{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R)::T
-    hi, lo = multiply_errorfree(a, b)
+@inline function mul_round(a::T, b::T, rounding::R)::T where {T<:SysFloat, R<:RoundingMode}
+    hi, lo = two_prod(a, b)
     return round_errorfree(hi, lo, rounding)
 end
-mul_round{T<:SysFloat}(a::T, b::T) = a * b
+mul_round(a::T, b::T) = a * b
 
-@inline function inv_round{T<:SysFloat, R<:RoundingMode}(a::T, rounding::R)::T
-    hi, lo = inv_errorfree(a)
+@inline function inv_round(a::T, rounding::R)::T where {T<:SysFloat, R<:RoundingMode}
+    hi, lo = two_inv(a)
     return round_errorfree(hi, lo, rounding)
 end
-inv_round{T<:SysFloat}(a::T) = inv(a)
+inv_round(a::T) where {T<:SysFloat} = inv(a)
 
-@inline function div_round{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R)::T
-    hi, lo = divide_accurately(a, b)
+@inline function div_round{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R)::T where {T<:SysFloat, R<:RoundingMode}
+    hi, lo = two_div(a, b)
     return round_errorfree(hi, lo, rounding)
 end
-div_round{T<:SysFloat}(a::T, b::T) = a / b
+div_round(a::T, b::T) where {T<:SysFloat} = a / b
 
-@inline function sqr_round{T<:SysFloat, R<:RoundingMode}(a::T, rounding::R)::T
-    hi, lo = square_errorfree(a)
+@inline function square_round(a::T, rounding::R)::T where {T<:SysFloat, R<:RoundingMode}
+    hi, lo = two_square(a)
     return round_errorfree(hi, lo, rounding)
 end
-sqr_round{T<:SysFloat}(a::T) = a^2
+square_round(a::T) where {T<:SysFloat} = a^2
 
-@inline function sqrt_round{T<:SysFloat, R<:RoundingMode}(a::T, rounding::R)::T
-    hi, lo = sqrt_accurately(a)
+@inline function sqrt_round(a::T, rounding::R)::T where {T<:SysFloat, R<:RoundingMode}
+    hi, lo = two_sqrt(a)
     return round_errorfree(hi, lo, rounding)
 end
-sqrt_round{T<:SysFloat}(a::T) = sqrt(a)
+sqrt_round(a::T) where {T<:SysFloat} = sqrt(a)
 
 #=
     To perform arithmetic with directed rounding more rapidly
@@ -59,53 +59,32 @@ sqrt_round{T<:SysFloat}(a::T) = sqrt(a)
       and quick, accurate float adjacency value calculation.
 =#
 
-@inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Nearest})::T
+@inline function round_errorfree(hi::T, lo::T, ::RoundingMode{:Nearest})::T where {T<:SysFloat}
      !isinf(hi) && return hi
      return signbit(hi) ? T(-Inf) : T(Inf)
 end
 
-@inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:ToZero})::T
-     !isinf(hi) && return signbit(hi) != signbit(lo) ? AdjacentFloats.next_nearerto_zero(hi) : hi
+@inline function round_errorfree(hi::T, lo::T, ::RoundingMode{:ToZero})::T where {T<:SysFloat}
+     !isinf(hi) && return signbit(hi) != signbit(lo) ? next_nearerto_zero(hi) : hi
      return signbit(hi) ? nextfloat(T(-Inf)) : prevfloat(T(Inf))
 end
 
-@inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:FromZero})::T
-    !isinf(hi) && return signbit(hi) == signbit(lo) ? AdjacentFloats.next_awayfrom_zero(hi) : hi
+@inline function round_errorfree(hi::T, lo::T, ::RoundingMode{:FromZero})::T where {T<:SysFloat}
+    !isinf(hi) && return signbit(hi) == signbit(lo) ? next_awayfrom_zero(hi) : hi
     return signbit(hi) ? T(-Inf) : T(Inf)
 end
 
-@inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Up})::T
+@inline function round_errorfree(hi::T, lo::T, ::RoundingMode{:Up})::T where {T<:SysFloat}
     !isinf(hi) && return (lo<=zero(T) || isnan(lo))  ? hi : next_float(hi)
     return signbit(hi) ? nextfloat(T(-Inf)) : T(Inf)
 end
 
-@inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Down})::T
+@inline function round_errorfree(hi::T, lo::T, ::RoundingMode{:Down})::T where {T<:SysFloat}
     !isinf(hi) && return (lo>=zero(T) || isnan(lo))  ? hi : prev_float(hi)
     return signbit(hi) ? T(-Inf) : prevfloat(T(Inf))
 end
 
-#= prior (reasonable, conflicts with interval rounding on Infinities)
-
-@inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Nearest})::T
-     return hi
-end
-
-@inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:ToZero})::T
-    return signbit(hi) != signbit(lo) ? AdjacentFloats.next_nearerto_zero(hi) : hi
-end
-
-@inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:FromZero})::T
-    return signbit(hi) == signbit(lo) ? AdjacentFloats.next_awayfrom_zero(hi) : hi
-end
-
-@inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Up})::T
-    return (lo<=zero(T) || isnan(lo))  ? hi : next_float(hi)
-end
-
-@inline function round_errorfree{T<:SysFloat}(hi::T, lo::T, ::RoundingMode{:Down})::T
-    return (lo>=zero(T) || isnan(lo))  ? hi : prev_float(hi)
-end
-
-=#
+@inline next_nearerto_zero(x::T) where {T<:SysFloat} = !signbit(x) ? prevfloat(x) : nextfloat(x)
+@inline next_awayfrom_zero(x::T) where {T<:SysFloat} = !signbit(x) ? nextfloat(x) : prevfloat(x)
 
 end # module
