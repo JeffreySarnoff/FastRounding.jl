@@ -79,7 +79,7 @@ end
 end
 
 @inline function round_errorfree(hi::T, lo::T, ::RoundingMode{:Down})::T where {T<:SysFloat}
-    !isinf(hi) && return (lo>zero(T) || iszero(hi) || isnan(lo))  ? hi : prev_float(hi)
+    !isinf(hi) && return (lo>zero(T) || iszero(hi) || isnan(lo))  ? hi : prevfloat(hi)
     return signbit(hi) ? T(-Inf) : prevfloat(T(Inf))
 end
 
