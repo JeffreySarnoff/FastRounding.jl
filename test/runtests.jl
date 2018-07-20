@@ -82,7 +82,7 @@ end
 
 a = 0.1; b = 0.1; hi, lo = two_sum(a, b)
 @assert !iszero(hi) && iszero(lo)
-@test round_errorfree(hi, lo, RoundUp) == nextfloat(0.2)
-@test round_errorfree(hi, lo, RoundDown) == prevfloat(0.2)
+@test FastRounding.round_errorfree(hi, lo, RoundUp) == nextfloat(0.2)
+@test FastRounding.round_errorfree(hi, lo, RoundDown) == prevfloat(0.2)
 @test add_round(a, b, RoundUp) == nextfloat(0.2)
 @test add_round(a, b, RoundDown) == prevfloat(0.2)
