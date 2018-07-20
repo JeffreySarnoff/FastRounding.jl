@@ -1,5 +1,10 @@
 using FastRounding
-using Test
+
+if VERSION >= v"0.7-"
+   using Test
+else
+   using Base.Test
+end
 
 const SysFloat = Union{Float64, Float32}
 
@@ -73,3 +78,6 @@ end
 @test testrounding(/, 1.0, 1.0, RoundDown) == 1.0
 @test testrounding(/, 1.0, 1.0, RoundToZero) == 1.0
 @test testrounding(/, 1.0, 1.0, RoundNearest) == 1.0
+
+@test testrounding(+, 0.1, 0.1, RoundUp) == 0.2
+@test testrounding(+, 0.1, 0.1, RoundDown) == prevfloat(0.2)
