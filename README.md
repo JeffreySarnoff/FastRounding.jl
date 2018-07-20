@@ -34,8 +34,6 @@
 
 ## Internal Logic
 
-See [AdjacentFloats.jl](https://github.com/JeffreySarnoff/AdjacentFloats.jl) for `next_float`, `prev_float`, `next_nearerto_zero`, `next_nearerto_zero`.
-
 #### RoundNearest
 
 | sign of `hi` | sign of `lo` | rounding | fastrounding |
