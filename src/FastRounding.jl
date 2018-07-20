@@ -1,6 +1,6 @@
 module FastRounding
 
-export add_round, sub_round, mul_round, sqr_round,
+export add_round, sub_round, mul_round, square_round,
        inv_round, div_round, sqrt_round
 
 using AdjacentFloats
