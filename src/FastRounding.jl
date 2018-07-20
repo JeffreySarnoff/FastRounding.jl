@@ -34,7 +34,7 @@ mul_round(a::T, b::T) where {T<:SysFloat} = a * b
 end
 inv_round(a::T) where {T<:SysFloat} = inv(a)
 
-@inline function div_round{T<:SysFloat, R<:RoundingMode}(a::T, b::T, rounding::R)::T where {T<:SysFloat, R<:RoundingMode}
+@inline function div_round(a::T, b::T, rounding::R)::T where {T<:SysFloat, R<:RoundingMode}
     hi, lo = two_div(a, b)
     return round_errorfree(hi, lo, rounding)
 end
