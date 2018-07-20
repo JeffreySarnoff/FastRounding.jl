@@ -75,12 +75,12 @@ end
 end
 
 @inline function round_errorfree(hi::T, lo::T, ::RoundingMode{:Up})::T where {T<:SysFloat}
-    !isinf(hi) && return (lo<=zero(T) || isnan(lo))  ? hi : next_float(hi)
+    !isinf(hi) && return (lo<=zero(T) || isnan(lo))  ? hi : nextfloat(hi)
     return signbit(hi) ? nextfloat(T(-Inf)) : T(Inf)
 end
 
 @inline function round_errorfree(hi::T, lo::T, ::RoundingMode{:Down})::T where {T<:SysFloat}
-    !isinf(hi) && return (lo>=zero(T) || isnan(lo))  ? hi : prev_float(hi)
+    !isinf(hi) && return (lo>=zero(T) || isnan(lo))  ? hi : prevfloat(hi)
     return signbit(hi) ? T(-Inf) : prevfloat(T(Inf))
 end
 
