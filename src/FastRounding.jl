@@ -27,7 +27,7 @@ sub_round(a::T, b::T) where {T<:SysFloat} = a - b
     hi, lo = two_prod(a, b)
     return round_errorfree(hi, lo, rounding)
 end
-mul_round(a::T, b::T) = a * b
+mul_round(a::T, b::T) where {T<:SysFloat} = a * b
 
 @inline function inv_round(a::T, rounding::R)::T where {T<:SysFloat, R<:RoundingMode}
     hi, lo = two_inv(a)
