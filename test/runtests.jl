@@ -1,5 +1,5 @@
 using FastRounding
-using Base.Test
+using Test
 
 const SysFloat = Union{Float64, Float32}
 
