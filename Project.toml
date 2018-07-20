@@ -10,4 +10,4 @@ LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 ErrorfreeArithmetic = "90fa49ef-747e-5e6f-a989-263ba693cf1a"
 
 [compat]
-ErrorfreeArithmetic = ">=0.1.2"
+ErrorfreeArithmetic = ">=0.1.0"
