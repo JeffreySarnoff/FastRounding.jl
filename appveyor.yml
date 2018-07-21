@@ -3,7 +3,7 @@ os:
   - linux
   - osx
 julia:
-  - 0.6.2
+  - 0.6
   - nightly
 environment:
   matrix:
@@ -13,7 +13,7 @@ environment:
   - JULIA_URL: "https://julialangnightlies-s3.julialang.org/bin/winnt/x64/julia-latest-win64.exe"
 matrix:
   allow_failures:
-    - julia: 0.6.2
+    - julia: 0.6
     - JULIA_URL: "https://julialang-s3.julialang.org/bin/winnt/x86/0.5/julia-0.6-latest-win32.exe"
     - JULIA_URL: "https://julialang-s3.julialang.org/bin/winnt/x64/0.5/julia-0.6-latest-win64.exe"
 branches:
