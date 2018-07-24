@@ -2,7 +2,7 @@
 ### Faster directed rounding for inline arithmetic
 
 
-#### Copyright © 2015-2017 by Jeffrey Sarnoff.  Released under the MIT License.
+#### Copyright © 2015-2018 by Jeffrey Sarnoff.  Released under the MIT License.
 
 -----
 
