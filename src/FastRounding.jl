@@ -54,8 +54,7 @@ sqrt_round(a::T) where {T<:SysFloat} = sqrt(a)
 
 #=
     To perform arithmetic with directed rounding more rapidly
-      we use error-free transformations to control rounding
-      and quick, accurate float adjacency value calculation.
+      we use error-free transformations to control rounding.
 =#
 
 @inline function round_errorfree(hi::T, lo::T, ::RoundingMode{:Nearest})::T where {T<:SysFloat}
@@ -74,12 +73,12 @@ end
 end
 
 @inline function round_errorfree(hi::T, lo::T, ::RoundingMode{:Up})::T where {T<:SysFloat}
-    !isinf(hi) && return (lo<zero(T) || iszero(hi) || isnan(lo))  ? hi : nextfloat(hi)
+    !isinf(hi) && return (lo<=zero(T) || isnan(lo))  ? hi : nextfloat(hi)
     return signbit(hi) ? nextfloat(T(-Inf)) : T(Inf)
 end
 
 @inline function round_errorfree(hi::T, lo::T, ::RoundingMode{:Down})::T where {T<:SysFloat}
-    !isinf(hi) && return (lo>zero(T) || iszero(hi) || isnan(lo))  ? hi : prevfloat(hi)
+    !isinf(hi) && return (lo>=zero(T) || isnan(lo))  ? hi : prevfloat(hi)
     return signbit(hi) ? T(-Inf) : prevfloat(T(Inf))
 end
 
