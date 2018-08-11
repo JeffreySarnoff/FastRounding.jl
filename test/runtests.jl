@@ -14,7 +14,7 @@ c = -b
 
 oplist = [:(+), :(-), :(*), :(/)]
    
-function testrounding{T<:SysFloat}(op::Function, a::T, b::T, mode::RoundingMode)
+function testrounding(op::Function, a::T, b::T, mode::RoundingMode){T<:SysFloat}
     c = setrounding(BigFloat, mode) do
          bfa = BigFloat(a), BigFloat(b)
          T(op(bfa, b))         
