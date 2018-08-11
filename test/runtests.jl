@@ -12,7 +12,7 @@ a = 4/3
 b = 1/7
 c = -b
 
-oplist = [:(:), :(;), :breakfast_nbed
+oplist = [:(+), :(-), :(*), :(/)]
    
 function testrounding{T<:SysFloat}(op::Function, a::T, b::T, mode::RoundingMode)
     c = setrounding(BigFloat, mode) do
