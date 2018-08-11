@@ -17,8 +17,8 @@ oplist = [:(+), :(-), :(*), :(/)]
 function testrounding{T<:SysFloat}(op::Function, a::T, b::T, mode::RoundingMode)
     c = setrounding(BigFloat, mode) do
          bfa = BigFloat(a), BigFloat(b)
-             T(op(bfa, b))         
-         end
+         T(op(bfa, b))         
+    end
     return c
 end
 
