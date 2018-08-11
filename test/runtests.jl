@@ -13,9 +13,6 @@ function testrounding(op::Function, a::T, b::T, mode::RoundingMode) where T<: Sy
 
     c = setrounding(BigFloat, mode) do
             S(op(big(a), big(b)))
-        end
-    return c
-end
 
 @testset "Test Rounding" begin
     @testset "a + b" begin
