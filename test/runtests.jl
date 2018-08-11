@@ -12,12 +12,14 @@ a = 4/3
 b = 1/7
 c = -b
 
+#=
 function testrounding{T<:SysFloat}(op::Function, a::T, b::T, mode::RoundingMode)
     c = setrounding(T, mode) do
             op(a, b)
         end
     return c
 end
+=#
 
 @test testrounding(+, a, b, RoundUp) == add_round(a, b, RoundUp)
 @test testrounding(+, a, b, RoundDown) == add_round(a, b, RoundDown)
