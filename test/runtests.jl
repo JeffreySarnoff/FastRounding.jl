@@ -12,14 +12,17 @@ a = 4/3
 b = 1/7
 c = -b
 
-#=
+oplist = [:(:), :(;), :breakfast_nbed
+   
 function testrounding{T<:SysFloat}(op::Function, a::T, b::T, mode::RoundingMode)
-    c = setrounding(T, mode) do
-            op(a, b)
-        end
+    c = setrounding(BigFloat, mode) do
+         bfa = BigFloat(a), BigFloat(b)
+             T(op(bfa, b))         
+         end
     return c
 end
-=#
+
+#=
 
 @test testrounding(+, a, b, RoundUp) == add_round(a, b, RoundUp)
 @test testrounding(+, a, b, RoundDown) == add_round(a, b, RoundDown)
@@ -68,7 +71,7 @@ end
 
 @test testrounding(-, 1.0, 0.0, RoundUp) == 1.0
 @test testrounding(-, 1.0, 0.0, RoundDown) == 1.0
-@test testrounding(-, 1.0, 0.0, RoundToZero) == 1.0
+@test testrounding(-, 1l.0, 0.0, RoundToZero) == 1.0
 @test testrounding(-, 1.0, 0.0, RoundNearest) == 1.0
 
 @test testrounding(*, 1.0, 1.0, RoundUp) == 1.0
@@ -80,3 +83,8 @@ end
 @test testrounding(/, 1.0, 1.0, RoundDown) == 1.0
 @test testrounding(/, 1.0, 1.0, RoundToZero) == 1.0
 @test testrounding(/, 1.0, 1.0, RoundNearest) == 1.0
+
+   
+# end
+   
+end # module
