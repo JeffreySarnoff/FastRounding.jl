@@ -11,3 +11,9 @@ ErrorfreeArithmetic = "90fa49ef-747e-5e6f-a989-263ba693cf1a"
 
 [compat]
 ErrorfreeArithmetic = ">=0.1.2"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
