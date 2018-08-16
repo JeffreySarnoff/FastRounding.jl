@@ -2,7 +2,7 @@ desc = "Rounding without rounding modes, using error-free transformations."
 keywords = ["round", "directed rounding", "error-free transformations", "floating-point"]
 name = "FastRounding"
 author = "Jeffrey Sarnoff"
-uuid = "bd8b86fa-8421-11e8-08d9-473040acd177"
+uuid = "fa42c844-2597-5d31-933b-ebd51ab2693f"
 version = "v0.1.0"
 
 [deps]
