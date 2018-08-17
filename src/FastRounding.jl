@@ -7,9 +7,6 @@ using ErrorfreeArithmetic
 
 const SysFloat = Union{Float64, Float32}  # fast iff fma is available in hardware
 
-# old manner of use
-# setrounding(Float64, RoundNearest)
-# setrounding(Float32, RoundNearest)
 
 @inline function add_round(a::T, b::T, rounding::R)::T where {T<:SysFloat, R<:RoundingMode}
     hi, lo = two_sum(a, b)
