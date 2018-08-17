@@ -8,6 +8,7 @@ a = 4/3
 b = 1/7
 c = -b
 
+
 function testrounding(op::Function, a::T, b::T, mode::RoundingMode) where T<: SysFloat
     S = typeof(op(a,b))
 
@@ -91,3 +92,4 @@ end
         @test testrounding(/, 1.0, 1.0, RoundNearest) == 1.0
     end
 end
+
