@@ -3,7 +3,7 @@ keywords = ["round", "directed rounding", "error-free transformations", "floatin
 name = "FastRounding"
 author = "Jeffrey Sarnoff"
 uuid = "fa42c844-2597-5d31-933b-ebd51ab2693f"
-version = "v0.1.0"
+version = "v0.2.0"
 
 [deps]
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
