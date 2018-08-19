@@ -45,7 +45,23 @@
 - sqrt_round, inv_round
 - div_round
 
-### how to
+#### unicode versions
+
+ - ◌₌ ≝ ◌ rounds to nearest
+ - ◌₊ ≝ ◌ rounds up
+ - ◌₋ ≝ ◌ rounds down
+ - ◌₀ ≝ ◌ rounds toward zero
+ - ◌₁ ≝ ◌ rounds away from zero
+ 
+ - ⊕ ≝ add
+ - ⊖ ≝ subtract
+ - ⊗ ≝ multiply
+ - ⚆ ≝ inverse, reciprocal
+ - ⊘ ≝ divide
+ - ⊚ ≝ square
+ - ⊙ ≝ sqrt
+ 
+ ## how to
 
 ```julia
 
@@ -87,6 +103,13 @@ julia> inv_round(-two, RoundToZero)
 
 julia> inv_round(-two, RoundFromZero)
 -0.5000000000000001
+
+julia> ⊙₋(two)  # sqrt(2) rounding down
+1.414213562373095
+
+julia> two ⊘₁ ans  # 2 / (sqrt(2) rounding down) rounding away from zero
+1.4142135623730954
+
 ```
 
 -------
