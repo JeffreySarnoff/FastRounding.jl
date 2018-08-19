@@ -28,9 +28,7 @@
 
 -------
 
-## Use
-
-### rounding modes
+### Rounding Modes
 
 - RoundNearest
 - RoundUp
@@ -38,14 +36,14 @@
 - RoundToZero
 - RoundFromZero
 
-### exports
+### Exports
 
 - add_round, sub_round
 - square_round, mul_round
 - sqrt_round, inv_round
 - div_round
 
-#### unicode versions
+### Equivalent Exports
 
 | subscript | signifies mode |
 |:---------:|:--------------|
@@ -55,6 +53,7 @@
 | ◌₀        | RoundToZero   |
 | ◌₁        | RoundFromZero |
   
+-----
 
 | unicode op | arithmetic op |
 |:----------:|:-------------:|
@@ -67,9 +66,10 @@
 | ⊙          | sqrt          |
  
 
-## how to
+## Use
 
 ```julia
+julia> using FastRounding
 
 julia> a = Float32(pi)
 3.1415927f0
