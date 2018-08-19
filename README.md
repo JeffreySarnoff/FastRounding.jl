@@ -106,4 +106,5 @@ If you require that RoundUp, RoundDown pairs assure enclosure of the theoretical
 at a precision that exceeds 106 bits when working with Float64s (which have 53 significant bits),
 please let me know.  I could force `nextfloat` and `prevfloat` calls in those cases, forgoing
 the tightest results for the most inclusive.  Those routines run a little slower than these.
+Note that those routines may not match the Standard test suite values in those adjusted cases.
 
