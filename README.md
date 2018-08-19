@@ -47,21 +47,27 @@
 
 #### unicode versions
 
- - ◌₌ ≝ ◌ rounds to nearest
- - ◌₊ ≝ ◌ rounds up
- - ◌₋ ≝ ◌ rounds down
- - ◌₀ ≝ ◌ rounds toward zero
- - ◌₁ ≝ ◌ rounds away from zero
+| subscript | signifies mode |
+|:---------:|:--------------|
+| ◌₌        | RoundNearest  |
+| ◌₊        | RoundUp       |
+| ◌₋        | RoundDown     |
+| ◌₀        | RoundToZero   |
+| ◌₁        | RoundFromZero |
+  
+
+| unicode op | arithmetic op |
+|:----------:|:-------------:|
+| ⊕          | +             |
+| ⊖          | -             |
+| ⊗          | *             |
+| ⚆          | inv           |
+| ⊘          | /             |
+| ⊚          | square        |
+| ⊙          | sqrt          |
  
- - ⊕ ≝ add
- - ⊖ ≝ subtract
- - ⊗ ≝ multiply
- - ⚆ ≝ inverse, reciprocal
- - ⊘ ≝ divide
- - ⊚ ≝ square
- - ⊙ ≝ sqrt
- 
- ## how to
+
+## how to
 
 ```julia
 
