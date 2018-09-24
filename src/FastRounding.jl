@@ -186,4 +186,15 @@ end
 @inline next_nearerto_zero(x::T) where {T<:SysFloat} = !signbit(x) ? prevfloat(x) : nextfloat(x)
 @inline next_awayfrom_zero(x::T) where {T<:SysFloat} = !signbit(x) ? nextfloat(x) : prevfloat(x)
 
+
+Base.trailing_zeros(x::Float64) = trailing_zeros(reinterpret(UInt64,x))
+Base.trailing_zeros(x::Float32) = trailing_zeros(reinterpret(UInt32,x))
+Base.trailing_zeros(x::Float16) = trailing_zeros(reinterpret(UInt16,x))
+
+isexactprod(a::Float64, b::Float64) = !signbit(trailing_zeros(a) + trailing_zeros(b) - 53)
+isexactprod(a::Float32, b::Float32) = !signbit(trailing_zeros(a) + trailing_zeros(b) - 24)
+isexactprod(a::Float16, b::Float16) = !signbit(trailing_zeros(a) + trailing_zeros(b) - 11)
+
+
+
 end # module
