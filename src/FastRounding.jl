@@ -90,7 +90,11 @@ end
 
 @inline function inv_round(a::T, rounding::R)::T where {T<:SysFloat, R<:RoundingMode}
     hi, lo = two_inv(a)
-    return round_errorfree(hi, lo, rounding)
+    if !(iszero(hi) || isinf(hi))
+        round_errorfree(hi, lo, rounding)
+    else
+        hi
+    end
 end
 inv_round(a::T) where {T<:SysFloat} = inv(a)
 
@@ -100,10 +104,16 @@ inv_round(a::T) where {T<:SysFloat} = inv(a)
 ⚆₀(a::T) where {T<:SysFloat} = inv_round(a, RoundToZero)
 ⚆₁(a::T) where {T<:SysFloat} = inv_round(a, RoundFromZero)
 
-@inline function div_round(a::T, b::T, rounding::R)::T where {T<:SysFloat, R<:RoundingMode}
+
+@inline function div_round(a::T, b::T, rounding::RoundingMode) where {T<:SysFloat}
     hi, lo = two_div(a, b)
-    return round_errorfree(hi, lo, rounding)
+    if !(iszero(hi) || isinf(hi))
+        round_errorfree(hi, lo, rounding)
+    else
+        hi
+    end
 end
+
 div_round(a::T, b::T) where {T<:SysFloat} = a / b
 
 ⊘₌(a::T, b::T) where {T<:SysFloat} = div_round(a, b, RoundNearest)
