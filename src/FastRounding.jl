@@ -16,6 +16,15 @@ using ErrorfreeArithmetic
 const SysFloat = Union{Float64, Float32}  # fast iff fma is available in hardware
 
 
+@inline Base.trailing_zeros(x::Float64) = trailing_zeros(reinterpret(UInt64,x))
+@inline Base.trailing_zeros(x::Float32) = trailing_zeros(reinterpret(UInt32,x))
+@inline Base.trailing_zeros(x::Float16) = trailing_zeros(reinterpret(UInt16,x))
+
+@inline isexactprod(a::Float64, b::Float64) = !signbit(trailing_zeros(a) + trailing_zeros(b) - 53)
+@inline isexactprod(a::Float32, b::Float32) = !signbit(trailing_zeros(a) + trailing_zeros(b) - 24)
+@inline isexactprod(a::Float16, b::Float16) = !signbit(trailing_zeros(a) + trailing_zeros(b) - 11)
+
+
 @inline function add_round(a::T, b::T, rounding::R)::T where {T<:SysFloat, R<:RoundingMode}
     hi, lo = two_sum(a, b)
     return round_errorfree(hi, lo, rounding)
@@ -48,6 +57,8 @@ mul_round(a::T, b::T) where {T<:SysFloat} = a * b
 
 
 @inline function mul_round(a::T, b::T, rounding::RoundingMode) where {T<:SysFloat}
+    isexactprod(a, b) && return a*b
+
     hi, lo = two_prod(a, b)
     if !(iszero(hi) || isinf(hi))
         round_errorfree(hi, lo, rounding)
@@ -195,16 +206,6 @@ end
 
 @inline next_nearerto_zero(x::T) where {T<:SysFloat} = !signbit(x) ? prevfloat(x) : nextfloat(x)
 @inline next_awayfrom_zero(x::T) where {T<:SysFloat} = !signbit(x) ? nextfloat(x) : prevfloat(x)
-
-
-Base.trailing_zeros(x::Float64) = trailing_zeros(reinterpret(UInt64,x))
-Base.trailing_zeros(x::Float32) = trailing_zeros(reinterpret(UInt32,x))
-Base.trailing_zeros(x::Float16) = trailing_zeros(reinterpret(UInt16,x))
-
-isexactprod(a::Float64, b::Float64) = !signbit(trailing_zeros(a) + trailing_zeros(b) - 53)
-isexactprod(a::Float32, b::Float32) = !signbit(trailing_zeros(a) + trailing_zeros(b) - 24)
-isexactprod(a::Float16, b::Float16) = !signbit(trailing_zeros(a) + trailing_zeros(b) - 11)
-
 
 
 end # module
