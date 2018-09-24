@@ -49,12 +49,6 @@ sub_round(a::T, b::T) where {T<:SysFloat} = a - b
 ⊖₀(a::T, b::T) where {T<:SysFloat} = sub_round(a, b, RoundToZero)
 ⊖₁(a::T, b::T) where {T<:SysFloat} = sub_round(a, b, RoundFromZero)
 
-@inline function mul_round(a::T, b::T, rounding::R)::T where {T<:SysFloat, R<:RoundingMode}
-    hi, lo = two_prod(a, b)
-    return round_errorfree(hi, lo, rounding)
-end
-mul_round(a::T, b::T) where {T<:SysFloat} = a * b
-
 
 @inline function mul_round(a::T, b::T, rounding::RoundingMode) where {T<:SysFloat}
     isexactprod(a, b) && return a*b
@@ -93,6 +87,8 @@ function mul_round_specialvalues(a::T, b::T, hi::T, rounding::RoundingMode) wher
     end
 end
 
+mul_round(a::T, b::T) where {T<:SysFloat} = a * b
+
 ⊗₌(a::T, b::T) where {T<:SysFloat} = mul_round(a, b, RoundNearest)
 ⊗₊(a::T, b::T) where {T<:SysFloat} = mul_round(a, b, RoundUp)
 ⊗₋(a::T, b::T) where {T<:SysFloat} = mul_round(a, b, RoundDown)
@@ -107,6 +103,7 @@ end
         hi
     end
 end
+
 inv_round(a::T) where {T<:SysFloat} = inv(a)
 
 ⚆₌(a::T) where {T<:SysFloat} = inv_round(a, RoundNearest)
