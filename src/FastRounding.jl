@@ -46,6 +46,42 @@ sub_round(a::T, b::T) where {T<:SysFloat} = a - b
 end
 mul_round(a::T, b::T) where {T<:SysFloat} = a * b
 
+
+@inline function mul_round(a::T, b::T, rounding::RoundingMode) where {T<:SysFloat}
+    hi, lo = two_prod(a, b)
+    if !(iszero(hi) || isinf(hi))
+        round_errorfree(hi, lo, rounding)
+    else
+        mul_round_specialvalues(a, b, hi, rounding)
+    end
+end
+
+function mul_round_specialvalues(a::T, b::T, hi::T, rounding::RoundingMode) where {T<:SysFloat}
+    if iszero(hi)
+        if iszero(a) || iszero(b)
+            hi
+        elseif rounding === RoundDown
+            signbit(hi) ? prevfloat(zero(T)) : hi
+        elseif rounding === RoundUp
+            signbit(hi) ? hi : nextfloat(zero(T))
+        else
+            hi
+        end
+    else
+        if isinf(a) || isinf(b)
+            hi
+        elseif rounding === RoundDown
+            signbit(hi) ? hi : prevfloat(hi)
+        elseif rounding === RoundUp
+            signbit(hi) ? nextfloat(hi) : hi
+        elseif rounding === RoundToZero
+            signbit(hi) ? nextfloat(hi) : prevfloat(hi)
+        else
+            hi
+        end
+    end
+end
+
 ⊗₌(a::T, b::T) where {T<:SysFloat} = mul_round(a, b, RoundNearest)
 ⊗₊(a::T, b::T) where {T<:SysFloat} = mul_round(a, b, RoundUp)
 ⊗₋(a::T, b::T) where {T<:SysFloat} = mul_round(a, b, RoundDown)
@@ -88,10 +124,26 @@ square_round(a::T) where {T<:SysFloat} = a^2
 ⊚₀(a::T) where {T<:SysFloat} = square_round(a, b, RoundToZero)
 ⊚₁(a::T) where {T<:SysFloat} = square_round(a, b, RoundFromZero)
 
-@inline function sqrt_round(a::T, rounding::R)::T where {T<:SysFloat, R<:RoundingMode}
-    hi, lo = two_sqrt(a)
-    return round_errorfree(hi, lo, rounding)
+@inline function sqrt_round(a::T, ::RoundingMode{:Down}) where {T<:SysFloat}
+    hi = sqrt(a)
+
+    while square_round(hi, RoundUp) > a
+        hi = prevfloat(hi)
+    end
+
+    return hi
 end
+
+@inline function sqrt_round(a::T, ::RoundingMode{:Up}) where {T<:SysFloat}
+    hi = sqrt(a)
+
+    while square_round(hi, RoundDown) > a
+        hi = nextfloat(hi)
+    end
+
+    return hi
+end
+
 sqrt_round(a::T) where {T<:SysFloat} = sqrt(a)
 
 ⊙₌(a::T) where {T<:SysFloat} = sqrt_round(a, RoundNearest)
