@@ -148,7 +148,7 @@ square_round(a::T) where {T<:SysFloat} = a^2
 @inline function sqrt_round(a::T, ::RoundingMode{:Down}) where {T<:SysFloat}
     hi = sqrt(a)
 
-    while square_round(hi, RoundUp) > a
+    while hi*hi > a
         hi = prevfloat(hi)
     end
 
@@ -158,7 +158,7 @@ end
 @inline function sqrt_round(a::T, ::RoundingMode{:Up}) where {T<:SysFloat}
     hi = sqrt(a)
 
-    while square_round(hi, RoundDown) > a
+    while hi*hi > a
         hi = nextfloat(hi)
     end
 
