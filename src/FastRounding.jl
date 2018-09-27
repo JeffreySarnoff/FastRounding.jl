@@ -142,24 +142,62 @@ square_round(a::T) where {T<:SysFloat} = a^2
 ⊚₀(a::T) where {T<:SysFloat} = square_round(a, b, RoundToZero)
 ⊚₁(a::T) where {T<:SysFloat} = square_round(a, b, RoundFromZero)
 
-@inline function sqrt_round(a::T, ::RoundingMode{:Down}) where {T<:SysFloat}
-    hi = sqrt(a)
+#=
+IEEE 754-2008
 
-    while hi*hi > a
-        hi = prevfloat(hi)
+sqrt(NaN, AnyRoundingMode) == NaN
+sqrt(Inf, AnyRoundingMode) == Inf
+sqrt(0.0, AnyRoundingMode) == 0.0
+sqrt(-0.0, AnyRoundingMode) == -0.0
+sqrt(x<0, AnyRoundingMode) is an error
+
+let
+  x  be a representable finite, nonnegative floating point number
+  s₌ be the floating point value of sqrt(x) [RoundNearest]
+  s₋ be the floating point value of sqrt(x) [RoundDown]
+  s₊ be the floating point value of sqrt(x) [RoundUp]
+
+by definition
+  s₋ === s₌ || s₋ === prevfloat(s₌)
+  s₊ === s₌ || s₊ === nextfloat(s₌)
+
+one and only one of these three must hold
+  (a) s₌ * s₌ === x
+      ∴ s₊ === s₋ === s₌
+  (b) s₌ * s₌ < x  && s₊ * s₊ > x
+      ∴ s₊ === nextfloat(s₌)
+  (c) s₌ * s₌ > x  && s₋ * s₋ < x
+      ∴ s₋ === prevfloat(s₌)
+
+if (a)
+  RoundDown: return s₌
+  RoundUp  : return s₌
+
+if (b)
+  RoundDown: return s₌
+  RoundUp  : return nextfloat(s₌)
+
+if (c)
+  RoundDown: return prevfloat(s₌)
+  RoundUp  : return s₌
+=#
+
+@inline function sqrt_round(x::T, ::RoundingMode{:Down}) where T<:SysFloat
+    y = sqrt(x)
+    z = y * y
+    if z > x
+      y = prevfloat(y)
     end
-
-    return hi
+    return y
 end
 
-@inline function sqrt_round(a::T, ::RoundingMode{:Up}) where {T<:SysFloat}
-    hi = sqrt(a)
-
-    while hi*hi > a
-        hi = nextfloat(hi)
+@inline function sqrt_round(x::T, ::RoundingMode{:Up}) where T<:SysFloat
+    y = sqrt(x)
+    z = y * y
+    if z < x
+      y = nextfloat(y)
     end
-
-    return hi
+    return y
 end
 
 sqrt_round(a::T) where {T<:SysFloat} = sqrt(a)
