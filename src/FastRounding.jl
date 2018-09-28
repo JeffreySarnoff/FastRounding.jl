@@ -200,6 +200,24 @@ end
     return y
 end
 
+@inline function sqrt_round(x::T, ::RoundingMode{:ToZero}) where T<:IEEEFloat
+    y = sqrt(x)
+    z = y * y
+    if z > x
+      y = prevfloat(y)
+    end
+    return y
+end
+
+@inline function sqrt_round(x::T, ::RoundingMode{:FromZero}) where T<:SysFloat
+    y = sqrt(x)
+    z = y * y
+    if z < x
+      y = nextfloat(y)
+    end
+    return y
+end
+
 sqrt_round(a::T) where {T<:SysFloat} = sqrt(a)
 
 ⊙₌(a::T) where {T<:SysFloat} = sqrt_round(a, RoundNearest)
