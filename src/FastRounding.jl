@@ -184,7 +184,7 @@ if (c)
 
 @inline function sqrt_round(x::T, ::RoundingMode{:Down}) where T<:SysFloat
     y = sqrt(x)
-    z = y * y
+    z = mul_round(y, y, RoundUp)
     if z > x
       y = prevfloat(y)
     end
@@ -193,7 +193,7 @@ end
 
 @inline function sqrt_round(x::T, ::RoundingMode{:Up}) where T<:SysFloat
     y = sqrt(x)
-    z = y * y
+    z = mul_round(y, y, RoundDown)
     if z < x
       y = nextfloat(y)
     end
