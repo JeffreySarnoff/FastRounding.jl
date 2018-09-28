@@ -1,7 +1,15 @@
 module FastRounding
 
-export add_round, sub_round, mul_round, square_round,
-       inv_round, div_round, sqrt_round,
+export RoundDownUp,
+       add, sub, mul, quo, inv, sqrt, sqr,
+       add₌, add₋, add₊, add₀, add₁,
+       sub₌, sub₋, sub₊, sub₀, sub₁,
+       mul₌, mul₋, mul₊, mul₀, mul₁,
+       quo₌, quo₋, quo₊, quo₀, quo₁,
+       inv₌, inv₋, inv₊, inv₀, inv₁,
+       sqrt₌, sqrt₋, sqrt₊, sqrt₀, sqrt₁,
+       sqr₌, sqr₋, sqr₊, sqr₀, sqr₁,
+       
        ⊕₊, ⊕₋, ⊕₌, ⊕₀, ⊕₁,
        ⊖₊, ⊖₋, ⊖₌, ⊖₀, ⊖₁,
        ⊗₊, ⊗₋, ⊗₌, ⊗₀, ⊗₁,
@@ -10,19 +18,43 @@ export add_round, sub_round, mul_round, square_round,
        ⊙₊, ⊙₋, ⊙₌, ⊙₀, ⊙₁,
        ⚆₊, ⚆₋, ⚆₌, ⚆₀, ⚆₁
 
-
+using Base: IEEEFloat
 using ErrorfreeArithmetic
 
 const SysFloat = Union{Float64, Float32}  # fast iff fma is available in hardware
 
+const RoundDownUp = RoundingMode{:DownUp}
 
-@inline Base.trailing_zeros(x::Float64) = trailing_zeros(reinterpret(UInt64,x))
-@inline Base.trailing_zeros(x::Float32) = trailing_zeros(reinterpret(UInt32,x))
-@inline Base.trailing_zeros(x::Float16) = trailing_zeros(reinterpret(UInt16,x))
+@inline function add(a::T, b::T, ::RoundingMode{:Nearest}) where {T<:IEEEFloat}
+    return a + b
+end
 
-@inline isexactprod(a::Float64, b::Float64) = !signbit(trailing_zeros(a) + trailing_zeros(b) - 53)
-@inline isexactprod(a::Float32, b::Float32) = !signbit(trailing_zeros(a) + trailing_zeros(b) - 24)
-@inline isexactprod(a::Float16, b::Float16) = !signbit(trailing_zeros(a) + trailing_zeros(b) - 11)
+@inline function sub(a::T, b::T, ::RoundingMode{:Nearest}) where {T<:IEEEFloat}
+    return a - b
+end
+
+@inline function mul(a::T, b::T, ::RoundingMode{:Nearest}) where {T<:IEEEFloat}
+    return a * b
+end
+
+@inline function quo(a::T, b::T, ::RoundingMode{:Nearest}) where {T<:IEEEFloat}
+    return a / b
+end
+
+@inline function sqrt(a::T, ::RoundingMode{:Nearest}) where {T<:IEEEFloat}
+    return sqrt(a)
+end
+
+@inline function add(a::T, b::T, ::RoundingMode{:DownUp}) where {T<:IEEEFloat}
+    hi, lo = two_sum(a, b)
+    return round_errorfree(hi, lo, RoundDown), round_errorfree(hi, lo, RoundUp)
+end
+
+@inline function sub(a::T, b::T, ::RoundingMode{:DownUp}) where {T<:IEEEFloat}
+    hi, lo = two_diff(a, b)
+    return round_errorfree(hi, lo, RoundDown), round_errorfree(hi, lo, RoundUp)
+end
+
 
 
 @inline function add_round(a::T, b::T, rounding::R)::T where {T<:SysFloat, R<:RoundingMode}
@@ -89,6 +121,14 @@ end
 
 mul_round(a::T, b::T) where {T<:SysFloat} = a * b
 
+@inline Base.trailing_zeros(x::Float64) = trailing_zeros(reinterpret(UInt64,x))
+@inline Base.trailing_zeros(x::Float32) = trailing_zeros(reinterpret(UInt32,x))
+@inline Base.trailing_zeros(x::Float16) = trailing_zeros(reinterpret(UInt16,x))
+
+@inline isexactprod(a::Float64, b::Float64) = !signbit(trailing_zeros(a) + trailing_zeros(b) - 53)
+@inline isexactprod(a::Float32, b::Float32) = !signbit(trailing_zeros(a) + trailing_zeros(b) - 24)
+@inline isexactprod(a::Float16, b::Float16) = !signbit(trailing_zeros(a) + trailing_zeros(b) - 11)
+
 ⊗₌(a::T, b::T) where {T<:SysFloat} = mul_round(a, b, RoundNearest)
 ⊗₊(a::T, b::T) where {T<:SysFloat} = mul_round(a, b, RoundUp)
 ⊗₋(a::T, b::T) where {T<:SysFloat} = mul_round(a, b, RoundDown)
@@ -113,7 +153,7 @@ inv_round(a::T) where {T<:SysFloat} = inv(a)
 ⚆₁(a::T) where {T<:SysFloat} = inv_round(a, RoundFromZero)
 
 
-@inline function div_round(a::T, b::T, rounding::RoundingMode) where {T<:SysFloat}
+@inline function quo_round(a::T, b::T, rounding::RoundingMode) where {T<:SysFloat}
     hi, lo = two_div(a, b)
     if !(iszero(hi) || isinf(hi))
         round_errorfree(hi, lo, rounding)
@@ -122,13 +162,14 @@ inv_round(a::T) where {T<:SysFloat} = inv(a)
     end
 end
 
-div_round(a::T, b::T) where {T<:SysFloat} = a / b
+quo_round(a::T, b::T) where {T<:SysFloat} = a / b
 
-⊘₌(a::T, b::T) where {T<:SysFloat} = div_round(a, b, RoundNearest)
-⊘₊(a::T, b::T) where {T<:SysFloat} = div_round(a, b, RoundUp)
-⊘₋(a::T, b::T) where {T<:SysFloat} = div_round(a, b, RoundDown)
-⊘₀(a::T, b::T) where {T<:SysFloat} = div_round(a, b, RoundToZero)
-⊘₁(a::T, b::T) where {T<:SysFloat} = div_round(a, b, RoundFromZero)
+⊘₌(a::T, b::T) where {T<:SysFloat} = quo_round(a, b, RoundNearest)
+⊘₊(a::T, b::T) where {T<:SysFloat} = quo_round(a, b, RoundUp)
+⊘₋(a::T, b::T) where {T<:SysFloat} = quo_round(a, b, RoundDown)
+⊘₀(a::T, b::T) where {T<:SysFloat} = quo_round(a, b, RoundToZero)
+⊘₁(a::T, b::T) where {T<:SysFloat} = quo_round(a, b, RoundFromZero)
+
 
 @inline function square_round(a::T, rounding::R)::T where {T<:SysFloat, R<:RoundingMode}
     hi, lo = two_square(a)
