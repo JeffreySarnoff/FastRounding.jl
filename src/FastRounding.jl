@@ -12,6 +12,7 @@ export add_round, sub_round, mul_round, square_round,
 
 
 using ErrorfreeArithmetic
+using Base: IEEEFloat
 
 const SysFloat = Union{Float64, Float32}  # fast iff fma is available in hardware
 
