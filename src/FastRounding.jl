@@ -181,6 +181,18 @@ if (b)
 if (c)
   RoundDown: return prevfloat(s₌)
   RoundUp  : return s₌
+
+:::::::::::::::::::::::::::::::::::::::
+
+yet testing compared with these accurate values fails
+    giving RoundUp, RoundNearest, RoundDown all as
+    1.975754705372688e-77
+
+julia> test = 3.9036066558023176e-154
+julia> sqrt(test, RoundUp)      === 1.9757547053726885e-77
+julia> sqrt(test, RoundNearest) === 1.975754705372688e-77
+julia> sqrt(test, RoundDown)    === 1.975754705372688e-77
+
 =#
 
 @inline function sqrt_round(x::T, ::RoundingMode{:Down}) where T<:SysFloat
