@@ -94,7 +94,7 @@ mul_round(a::T, b::T) where {T<:SysFloat} = a * b
 ⊗₊(a::T, b::T) where {T<:SysFloat} = mul_round(a, b, RoundUp)
 ⊗₋(a::T, b::T) where {T<:SysFloat} = mul_round(a, b, RoundDown)
 ⊗₀(a::T, b::T) where {T<:SysFloat} = mul_round(a, b, RoundToZero)
-⊗₁(a::T, b::T) where {T<:SysFloat} = inv_round(a, b, RoundFromZero)
+⊗₁(a::T, b::T) where {T<:SysFloat} = mul_round(a, b, RoundFromZero)
 
 @inline function inv_round(a::T, rounding::R)::T where {T<:SysFloat, R<:RoundingMode}
     hi, lo = two_inv(a)
