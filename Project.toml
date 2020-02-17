@@ -3,7 +3,7 @@ uuid = "fa42c844-2597-5d31-933b-ebd51ab2693f"
 keywords = ["round", "directed rounding", "error-free transformations", "floating-point"]
 desc = "Rounding without rounding modes, using error-free transformations."
 author = "Jeffrey Sarnoff"
-version = "0.3.0"
+version = "0.3.1"
 
 [deps]
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
